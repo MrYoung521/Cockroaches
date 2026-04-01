@@ -72,6 +72,62 @@
       background: #357abd;
       transform: translateY(-2px);
     }
+
+    /* Modal styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #000;
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+      width: 90%;
+      max-width: 680px;
+    }
+
+    .modal-box iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      background: white;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: bold;
+      line-height: 32px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .modal-close:hover {
+      background: #eee;
+    }
   </style>
 </head>
 <body>
@@ -81,36 +137,57 @@
     <h1 id="pageTitle">蟑螂实验组</h1>
 
     <!-- Alcohol -->
-    <a class="btn" id="btn1"
-      href="https://ycefhk-my.sharepoint.com/personal/joshua_young_ywies_com/_layouts/15/embed.aspx?UniqueId=bace36f2-1b53-4823-8630-19472aec6601&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
-      target="_blank">
-      酒精
-    </a>
+    <button class="btn" id="btn1" onclick="openModal('alcohol')">酒精</button>
 
     <!-- Oil -->
-    <a class="btn" id="btn2"
-      href="https://ycefhk-my.sharepoint.com/personal/joshua_young_ywies_com/_layouts/15/embed.aspx?UniqueId=4c949982-3216-4798-84c9-4c54818cb0f2&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
-      target="_blank">
-      油
-    </a>
+    <button class="btn" id="btn2" onclick="openModal('oil')">油</button>
 
     <!-- Water -->
-    <a class="btn" id="btn3"
-      href="https://ycefhk-my.sharepoint.com/personal/joshua_young_ywies_com/_layouts/15/embed.aspx?UniqueId=28f681c0-7671-4ae5-87b1-851c0f38bdeb&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
-      target="_blank">
-      水
-    </a>
+    <button class="btn" id="btn3" onclick="openModal('water')">水</button>
 
     <!-- Salt -->
-    <a class="btn" id="btn4"
-      href="https://ycefhk-my.sharepoint.com/personal/joshua_young_ywies_com/_layouts/15/embed.aspx?UniqueId=78f4a0d4-0a98-4a8a-a50f-d60f92989d65&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
-      target="_blank">
-      盐
-    </a>
+    <button class="btn" id="btn4" onclick="openModal('salt')">盐</button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="videoModal" onclick="handleOverlayClick(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <iframe id="modalIframe" src="" allowfullscreen scrolling="no"></iframe>
+    </div>
   </div>
 
   <script>
     let currentLang = "zh";
+
+    const videoSources = {
+      water:   "https://ycefhk-my.sharepoint.com/personal/joshua_young_ywies_com/_layouts/15/embed.aspx?UniqueId=28f681c0-7671-4ae5-87b1-851c0f38bdeb&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create",
+      alcohol: "https://ycefhk-my.sharepoint.com/personal/joshua_young_ywies_com/_layouts/15/embed.aspx?UniqueId=bace36f2-1b53-4823-8630-19472aec6601&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create",
+      oil:     "https://ycefhk-my.sharepoint.com/personal/joshua_young_ywies_com/_layouts/15/embed.aspx?UniqueId=4c949982-3216-4798-84c9-4c54818cb0f2&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create",
+      salt:    "https://ycefhk-my.sharepoint.com/personal/joshua_young_ywies_com/_layouts/15/embed.aspx?UniqueId=78f4a0d4-0a98-4a8a-a50f-d60f92989d65&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create"
+    };
+
+    function openModal(videoKey) {
+      const modal = document.getElementById("videoModal");
+      const iframe = document.getElementById("modalIframe");
+      iframe.src = videoSources[videoKey];
+      modal.classList.add("active");
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("videoModal");
+      const iframe = document.getElementById("modalIframe");
+      modal.classList.remove("active");
+      // Clear src to stop video playing in background
+      iframe.src = "";
+    }
+
+    function handleOverlayClick(event) {
+      // Close if clicking the dark overlay background, not the video box
+      if (event.target === document.getElementById("videoModal")) {
+        closeModal();
+      }
+    }
 
     function toggleLanguage() {
       const title = document.getElementById("pageTitle");
