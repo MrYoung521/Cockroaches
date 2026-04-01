@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>蟑螂实验组（cockroach experimental group）</title>
+  <style>
+    body {
+      font-family: "Microsoft YaHei", Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      position: relative;
+      background: white;
+      padding: 50px 40px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      text-align: center;
+      width: 90%;
+      max-width: 520px;
+    }
+
+    .lang-switch {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 8px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 10px;
+      background: #333;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .lang-switch:hover {
+      background: #555;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      color: #333;
+      font-size: 28px;
+      line-height: 1.4;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      margin: 12px 0;
+      padding: 15px;
+      font-size: 18px;
+      color: white;
+      background: #4a90e2;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .btn:hover {
+      background: #357abd;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="lang-switch" onclick="toggleLanguage()">English</button>
+
+    <h1 id="pageTitle">蟑螂实验组</h1>
+
+    <a class="btn" id="btn1" href="https://ycefhk-my.sharepoint.com/personal/terrance_zhang2025_ywies_com/_layouts/15/stream.aspx?id=%2Fpersonal%2Fterrance%5Fzhang2025%5Fywies%5Fcom%2FDocuments%2FIMG%5F0055%2Emov&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Eb9de92d7%2D1adc%2D4ebb%2D9461%2D1230da0cb2e9&isDarkMode=false" target="_blank">
+      酒精
+    </a>
+
+    <a class="btn" id="btn2" href="https://ycefhk-my.sharepoint.com/personal/terrance_zhang2025_ywies_com/_layouts/15/stream.aspx?id=%2Fpersonal%2Fterrance%5Fzhang2025%5Fywies%5Fcom%2FDocuments%2FIMG%5F0054%2Emov&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Eaae46c28%2Df4ca%2D452c%2D88ed%2De3dd7b606431&isDarkMode=false" target="_blank">
+      油
+    </a>
+
+    <a class="btn" id="btn3" href="https://ycefhk-my.sharepoint.com/personal/terrance_zhang2025_ywies_com/_layouts/15/stream.aspx?id=%2Fpersonal%2Fterrance%5Fzhang2025%5Fywies%5Fcom%2FDocuments%2FIMG%5F0057%2Emov&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E41b06d72%2D8a82%2D46a5%2Daa4f%2D40a0ad8422d1&isDarkMode=false" target="_blank">
+      水
+    </a>
+
+    <a class="btn" id="btn4" href="https://ycefhk-my.sharepoint.com/personal/terrance_zhang2025_ywies_com/_layouts/15/stream.aspx?id=%2Fpersonal%2Fterrance%5Fzhang2025%5Fywies%5Fcom%2FDocuments%2FIMG%5F0053%2Emov&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E2a9bb256%2D02c7%2D4fef%2Da2e8%2D8898acb050d4&isDarkMode=false" target="_blank">
+      盐
+    </a>
+  </div>
+
+  <script>
+    let currentLang = "zh";
+
+    function toggleLanguage() {
+      const title = document.getElementById("pageTitle");
+      const btn1 = document.getElementById("btn1");
+      const btn2 = document.getElementById("btn2");
+      const btn3 = document.getElementById("btn3");
+      const btn4 = document.getElementById("btn4");
+      const switchBtn = document.querySelector(".lang-switch");
+
+      if (currentLang === "zh") {
+        document.documentElement.lang = "en";
+        document.title = "Cockroach Experimental Group";
+        title.textContent = "Cockroach Experimental Group";
+        btn1.textContent = "Alcohol";
+        btn2.textContent = "Oil";
+        btn3.textContent = "Water";
+        btn4.textContent = "Salt";
+        switchBtn.textContent = "中文";
+        currentLang = "en";
+      } else {
+        document.documentElement.lang = "zh-CN";
+        document.title = "蟑螂实验组";
+        title.textContent = "蟑螂实验组";
+        btn1.textContent = "酒精";
+        btn2.textContent = "油";
+        btn3.textContent = "水";
+        btn4.textContent = "盐";
+        switchBtn.textContent = "English";
+        currentLang = "zh";
+      }
+    }
+  </script>
+</body>
+</html>
